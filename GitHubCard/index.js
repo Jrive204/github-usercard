@@ -2,6 +2,22 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+axios.get(`https://api.github.com/users/Jrive204`)
+.then(response => {
+  response.data.message.forEach(item => {
+    response.data.forEach( item => {
+      let button = buttonCreator(item);
+      parent.appendChild(button);
+  })
+
+    
+  })
+
+.catch( err => {
+  console.log(`Error`,err);
+})
+})
+
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -53,3 +69,37 @@ const followersArray = [];
   luishrd
   bigknell
 */
+function usercard (data){
+  //variables
+  const bigDiv = document.querySelector('div');
+  const userImg = document.querySelector('img');
+    userImg.src = data.url
+  const cardInfo = document.querySelector('div');
+  const nameHead = document.querySelector('h3');
+  const userName = document.querySelector('p');
+  const location = document.querySelector('p a');
+  const profile = document.querySelector('p');
+  const followers = document.querySelector('p');
+  const following = document.querySelector('p');
+  const biography = document.querySelector('p');
+  //class list add
+  bigDiv.classList.add('card');
+  cardInfo.classList.add('card-info');
+  nameHead.classList.add('name');
+  userName.classList.add('username');
+  //append
+  bigDiv.appendChild('userImg');
+  bigDiv.appendChild('cardInfo');
+  cardInfo.appendChild('nameHead');
+  cardInfo.appendChild('userName');
+  cardInfo.appendChild('location');
+  cardInfo.appendChild('profile');
+  cardInfo.appendChild('followers');
+  cardInfo.appendChild('following');
+  cardInfo.appendChild('biography');
+
+
+  
+  return bigDiv;
+  }
+  
