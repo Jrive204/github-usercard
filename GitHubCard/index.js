@@ -24,7 +24,7 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+// const followersArray = [];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -53,6 +53,27 @@ const followersArray = [];
   luishrd
   bigknell
 */
+
+  // console.log(response)
+  //   let data =  response.data       
+
+  //    for ( let item in data) {
+  //      console.log(`Hello`)
+  //     cardss.appendChild(newCards);    
+  //     const newCards = usercard(item)
+
+  // }
+
+    
+  // })
+
+
+
+
+
+  let cardss = document.querySelector(`.cards`);
+
+
 function usercard (d){
   //variables
   const bigDiv = document.createElement('div');
@@ -69,12 +90,13 @@ function usercard (d){
   const profile = document.createElement('p');
     profile.textContent = `Profile:`
   const profa = document.createElement(`a`)
-    profa.href = d.url
+    profa.setAttribute(`href`, d.html_url)
+    profa.textContent = `${d.html_url}`
     // check later var = link name
   const followers = document.createElement('p');
-    followers.textContent = d.followers
+    followers.textContent = `followers ${d.followers}`
   const following = document.createElement('p');
-    following.textContent = d.following
+    following.textContent = `following ${d.following}`
   const biography = document.createElement('p');
     biography.textContent = `Bio: ${d.bio}`
   //class list add
@@ -94,27 +116,33 @@ function usercard (d){
   cardInfo.appendChild(following);
   cardInfo.appendChild(biography);
  
+  cardss.appendChild(bigDiv)
+
   return bigDiv;
   }
 
-
-
-
-
 axios.get(`https://api.github.com/users/Jrive204`)
 .then(response => {
-  console.log(response)
-    let data =  response.data 
-     for ( let item in data => {
-       console.log(`Hello`)
-      // let cardss = document.getElementsByClassName(`cards`);
-      // const newCards = usercard(item)
-      // cardss.appendChild(newCards);
+  usercard(response.data)
+    // console.log(response.data)
   })
-
+  
+axios.get(`https://api.github.com/users/Jrive204/followers`)
+.then(response => {
+  response.data.forEach(item => {
+    // console.log(item)
+    let logininfo = item.login;
+    let https = `https://api.github.com/users/${logininfo}`
+    axios.get(https).then(result => {
+      usercard(result.data);
+    }) 
+  
     
   })
+})
 
-// .catch( err => {
-//   console.log(`Error`,err);
-// })
+.catch( err => {
+  console.log(`Error`,err);
+})
+
+
