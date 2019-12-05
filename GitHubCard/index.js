@@ -2,22 +2,6 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-axios.get(`https://api.github.com/users/Jrive204`)
-.then(response => {
-  response.data.message.forEach(item => {
-    response.data.forEach( item => {
-      let button = buttonCreator(item);
-      parent.appendChild(button);
-  })
-
-    
-  })
-
-.catch( err => {
-  console.log(`Error`,err);
-})
-})
-
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -69,37 +53,68 @@ const followersArray = [];
   luishrd
   bigknell
 */
-function usercard (data){
+function usercard (d){
   //variables
-  const bigDiv = document.querySelector('div');
-  const userImg = document.querySelector('img');
-    userImg.src = data.url
-  const cardInfo = document.querySelector('div');
-  const nameHead = document.querySelector('h3');
-  const userName = document.querySelector('p');
-  const location = document.querySelector('p a');
-  const profile = document.querySelector('p');
-  const followers = document.querySelector('p');
-  const following = document.querySelector('p');
-  const biography = document.querySelector('p');
+  const bigDiv = document.createElement('div');
+  const userImg = document.createElement('img');
+    userImg.src = d.avatar_url
+  const cardInfo = document.createElement('div');
+  const nameHead = document.createElement('h3');
+    nameHead.textContent = d.name
+  const userName = document.createElement('p');
+    userName.textContent = d.login
+  const location = document.createElement('p');
+    location.textContent = `location: ${d.location}`
+
+  const profile = document.createElement('p');
+    profile.textContent = `Profile:`
+  const profa = document.createElement(`a`)
+    profa.href = d.url
+    // check later var = link name
+  const followers = document.createElement('p');
+    followers.textContent = d.followers
+  const following = document.createElement('p');
+    following.textContent = d.following
+  const biography = document.createElement('p');
+    biography.textContent = `Bio: ${d.bio}`
   //class list add
   bigDiv.classList.add('card');
   cardInfo.classList.add('card-info');
   nameHead.classList.add('name');
   userName.classList.add('username');
   //append
-  bigDiv.appendChild('userImg');
-  bigDiv.appendChild('cardInfo');
-  cardInfo.appendChild('nameHead');
-  cardInfo.appendChild('userName');
-  cardInfo.appendChild('location');
-  cardInfo.appendChild('profile');
-  cardInfo.appendChild('followers');
-  cardInfo.appendChild('following');
-  cardInfo.appendChild('biography');
-
-
-  
+  bigDiv.appendChild(userImg);
+  bigDiv.appendChild(cardInfo);
+  cardInfo.appendChild(nameHead);
+  cardInfo.appendChild(userName);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  profile.appendChild(profa)
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(biography);
+ 
   return bigDiv;
   }
-  
+
+
+
+
+
+axios.get(`https://api.github.com/users/Jrive204`)
+.then(response => {
+  console.log(response)
+    let data =  response.data 
+     for ( let item in data => {
+       console.log(`Hello`)
+      // let cardss = document.getElementsByClassName(`cards`);
+      // const newCards = usercard(item)
+      // cardss.appendChild(newCards);
+  })
+
+    
+  })
+
+// .catch( err => {
+//   console.log(`Error`,err);
+// })
