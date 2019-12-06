@@ -70,10 +70,6 @@
 
 
 
-
-  let cardss = document.querySelector(`.cards`);
-
-
 function usercard (d){
   //variables
   const bigDiv = document.createElement('div');
@@ -94,11 +90,12 @@ function usercard (d){
     profa.textContent = `${d.html_url}`
     // check later var = link name
   const followers = document.createElement('p');
-    followers.textContent = `followers ${d.followers}`
+    followers.textContent = `followers: ${d.followers}`
   const following = document.createElement('p');
-    following.textContent = `following ${d.following}`
+    following.textContent = `following: ${d.following}`
   const biography = document.createElement('p');
     biography.textContent = `Bio: ${d.bio}`
+
   //class list add
   bigDiv.classList.add('card');
   cardInfo.classList.add('card-info');
@@ -116,14 +113,26 @@ function usercard (d){
   cardInfo.appendChild(following);
   cardInfo.appendChild(biography);
  
-  cardss.appendChild(bigDiv)
 
   return bigDiv;
   }
+  // let carddiv = usercard(d)
+let cardss = document.querySelector(`.cards`);
+
+  
+  
+
 
 axios.get(`https://api.github.com/users/Jrive204`)
-.then(response => {
-  usercard(response.data)
+.then(response => {  
+  cardss.appendChild(usercard(response.data))
+  let calander = document.querySelector(`.card`)
+  let calanderdiv = document.createElement(`div`)
+  calanderdiv.classList.add(`Calender`)
+  calanderdiv.textContent = `\u25BC`
+  calander.appendChild(calanderdiv)
+
+  // usercard(response.data)
     // console.log(response.data)
   })
   
@@ -131,10 +140,17 @@ axios.get(`https://api.github.com/users/Jrive204/followers`)
 .then(response => {
   response.data.forEach(item => {
     // console.log(item)
+    let calander = document.querySelector(`.card`)
+    let calanderdiv = document.createElement(`div`)
+    calanderdiv.classList.add(`Calender`)
+    // calanderdiv.textContent = `hello`
+    calander.appendChild(calanderdiv)
+    
     let logininfo = item.login;
     let https = `https://api.github.com/users/${logininfo}`
     axios.get(https).then(result => {
-      usercard(result.data);
+      cardss.appendChild(usercard(result.data))
+      
     }) 
   
     
@@ -145,4 +161,9 @@ axios.get(`https://api.github.com/users/Jrive204/followers`)
   console.log(`Error`,err);
 })
 
+  // let calander = document.querySelector(`.card`)
 
+  // let calanderdiv = document.createElement(`div`)
+  // calanderdiv.classList.add(`Calender`)
+  // calanderdiv.textContent = `hello`
+  // monkey.appendChild(calanderdiv)
