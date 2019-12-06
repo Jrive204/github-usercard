@@ -96,6 +96,15 @@ function usercard (d){
   const biography = document.createElement('p');
     biography.textContent = `Bio: ${d.bio}`
 
+  const calanderdiv = document.createElement(`div`)
+    calanderdiv.classList.add(`calender`)
+    calanderdiv.textContent = `\u25BC`
+
+  const scrip = document.createElement(`script`)
+  // scrip.textContent =     `new GitHubCalendar(".calendar", "Jrive204", { responsive: true });`
+ 
+  // scrip.textContent = `${cal}`
+
   //class list add
   bigDiv.classList.add('card');
   cardInfo.classList.add('card-info');
@@ -104,6 +113,8 @@ function usercard (d){
   //append
   bigDiv.appendChild(userImg);
   bigDiv.appendChild(cardInfo);
+  bigDiv.appendChild(calanderdiv);
+  calanderdiv.appendChild(scrip)
   cardInfo.appendChild(nameHead);
   cardInfo.appendChild(userName);
   cardInfo.appendChild(location);
@@ -112,25 +123,37 @@ function usercard (d){
   cardInfo.appendChild(followers);
   cardInfo.appendChild(following);
   cardInfo.appendChild(biography);
+
+   
+  let calanderall = document.querySelectorAll(`.calender`)
+  calanderall.forEach(ele =>{
+    console.log(`hello`)
+    ele.style.color = `red`
+    // ele.calanderdiv.textContent = `\u25BC`
+    // ele.createElement(`div`).classList.add(`Calander`)
+    // ele.createElement(`div`)
+    // ele.classList.add(`Calander`)
+
+  })
  
 
   return bigDiv;
   }
-  // let carddiv = usercard(d)
 let cardss = document.querySelector(`.cards`);
 
-  
+ let calander = document.querySelector(`.card`)
+  let calanderdiv = document.createElement(`div`)  
   
 
 
 axios.get(`https://api.github.com/users/Jrive204`)
 .then(response => {  
   cardss.appendChild(usercard(response.data))
-  let calander = document.querySelector(`.card`)
-  let calanderdiv = document.createElement(`div`)
-  calanderdiv.classList.add(`Calender`)
-  calanderdiv.textContent = `\u25BC`
-  calander.appendChild(calanderdiv)
+  // let calander = document.querySelector(`.card`)
+  // let calanderdiv = document.createElement(`div`)
+  // calanderdiv.classList.add(`Calender`)
+  // calanderdiv.textContent = `\u25BC`
+  // calander.appendChild(calanderdiv)
 
   // usercard(response.data)
     // console.log(response.data)
@@ -139,22 +162,27 @@ axios.get(`https://api.github.com/users/Jrive204`)
 axios.get(`https://api.github.com/users/Jrive204/followers`)
 .then(response => {
   response.data.forEach(item => {
-    // console.log(item)
-    let calander = document.querySelector(`.card`)
-    let calanderdiv = document.createElement(`div`)
-    calanderdiv.classList.add(`Calender`)
-    // calanderdiv.textContent = `hello`
-    calander.appendChild(calanderdiv)
-    
+    // console.log(item)  
     let logininfo = item.login;
     let https = `https://api.github.com/users/${logininfo}`
     axios.get(https).then(result => {
       cardss.appendChild(usercard(result.data))
       
+    //   let calanderall = document.querySelectorAll(`.card`)
+    // calanderall.forEach(ele =>{
+    //   console.log(`hello`)
+    //   ele.createElement(`div`).classList.add(`Calander`)
+    //   // ele.createElement(`div`)
+    //   // ele.classList.add(`Calander`)
+
+    // })
     }) 
+   
   
     
-  })
+  }) 
+    
+
 })
 
 .catch( err => {
